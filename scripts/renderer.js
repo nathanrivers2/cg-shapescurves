@@ -10,6 +10,7 @@ class Renderer {
         this.num_curve_sections = num_curve_sections;
         this.show_points = show_points_flag;
     }
+    //making change
 
     // n:  int
     setNumCurveSections(n) {
