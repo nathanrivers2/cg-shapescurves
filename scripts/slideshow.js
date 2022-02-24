@@ -29,6 +29,7 @@ function init() {
             }
         }
     })
+    //changing this too
 
     app.renderer = new Renderer(app.view, app.curve_sections, app.show_points);
     app.renderer.drawSlide(app.slide_idx);
