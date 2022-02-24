@@ -12,6 +12,7 @@ class Renderer {
     }
     //making change
     //dont push
+    //heres a fuck up
 
     // n:  int
     setNumCurveSections(n) {
