@@ -10,11 +10,7 @@ class Renderer {
         this.num_curve_sections = num_curve_sections;
         this.show_points = show_points_flag;
     }
-    //making change
-    //dont push
-    //heres a fuck up
-
-    // n:  int
+ 
     setNumCurveSections(n) {
         this.num_curve_sections = n;
         this.drawSlide(this.slide_idx);
