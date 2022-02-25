@@ -94,28 +94,23 @@ class Renderer {
     drawCircle(center, radius, color, ctx) {
         //x=center(x)+radius*cos(angle) 
         //y=center(y)+radius*sin(angle) 
-
-
+    
         let edge = {x:center.x, y:center.y+radius};
         this.drawLine(center,edge,[0,250,0,250],ctx);
 
-        let i=0;
-        
-        // this is jumping way too many degrees, need to check the math out.
-        for(let x=0; x<10; x++){ 
-            let x = center.x+radius*Math.cos(i); 
-            let y = center.y+radius*Math.sin(i); 
+        let firstPoint = {x:center.x+radius, y:center.y}; 
+        let nextPoint = {x:null, y:null}; 
+        //make an octagon 
+        let i = 45;
 
-            i=i+10
+        for(let x=0; x<8; x++){ 
+            nextPoint.x=center.x+(radius*Math.cos(i*(0.0174533))); 
+            nextPoint.y=center.y+(radius*Math.sin(i*(0.0174533)));
 
-            let x1 = center.x+radius*Math.cos(i);
-            let y1 = center.y+radius*Math.sin(i); 
+            this.drawLine(firstPoint, nextPoint, color, ctx); 
 
-            let p0 ={x:x, y:y}; 
-            let p1 = {x:x1, y:y1};
-        
-            this.drawLine(p0,p1,color,ctx);
-
+            firstPoint=nextPoint;
+            i=i+45;
         }
     }
 
