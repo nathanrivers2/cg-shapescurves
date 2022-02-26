@@ -68,6 +68,28 @@ class Renderer {
 
     // ctx:          canvas context
     drawSlide3(ctx) {
+        //name slide; 
+        let color = [250, 0, 0, 250];
+        //N
+        this.drawLine({x:50,y:100},{x:50,y:500},color,ctx);
+        this.drawLine({x:50,y:500},{x:125,y:100},color,ctx);
+        this.drawLine({x:125,y:100},{x:125,y:500},color,ctx);
+        //a use circle 
+        let center = {x:240, y:175}; 
+        let radius = 75;
+        this.drawCircleConstantPoints(center,radius,color,ctx,36);
+
+        let edgeX = center.x+radius*(Math.cos(0.0174533*20));
+        let edgeY = center.y+radius*(Math.sin(0.0174533*20));
+        let edgePoint = {x:edgeX,y:edgeY};
+
+        this.drawLine(edgePoint,{x:340,y:110},color,ctx);
+        //t
+
+        this.drawLine({x:375,y:100},{x:375,y:400}, color,ctx); 
+        this.drawLine({x:325,y:300},{x:425,y:300}, color,ctx);
+
+        //e use curve
 
     }
 
@@ -97,6 +119,34 @@ class Renderer {
           //need to add show point ability;
 
         let numPoints = this.num_curve_sections;
+        let angle = 360/numPoints; 
+        let angleCons = angle;
+
+        let first = {x:center.x+radius, y:center.y}; 
+
+        let nextX = center.x+radius*(Math.cos(0.0174533*angle));
+        let nextY = center.y+radius*(Math.sin(0.0174533*angle));
+        let next = {x:nextX,y:nextY}; 
+
+        for(let i=0; i<numPoints; i++){ 
+            this.drawLine(first,next,color,ctx); 
+            first=next;
+            
+            angle=angle+angleCons;
+
+            nextX = center.x+radius*(Math.cos(0.0174533*angle));
+            nextY = center.y+radius*(Math.sin(0.0174533*angle));
+            next = {x:nextX,y:nextY};
+        } 
+    }
+
+
+    drawCircleConstantPoints(center, radius, color, ctx, constantPoints) {
+        //x=center(x)+radius*cos(angle) 
+        //y=center(y)+radius*sin(angle) 
+        //need to add show point ability;
+
+        let numPoints = constantPoints;
         let angle = 360/numPoints; 
         let angleCons = angle;
 
