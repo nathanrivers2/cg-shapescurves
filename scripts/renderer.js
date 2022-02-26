@@ -94,24 +94,28 @@ class Renderer {
     drawCircle(center, radius, color, ctx) {
         //x=center(x)+radius*cos(angle) 
         //y=center(y)+radius*sin(angle) 
-    
-        let edge = {x:center.x, y:center.y+radius};
-        this.drawLine(center,edge,[0,250,0,250],ctx);
+          //need to add show point ability;
 
-        let firstPoint = {x:center.x+radius, y:center.y}; 
-        let nextPoint = {x:null, y:null}; 
-        //make an octagon 
-        let i = 45;
+        let numPoints = this.num_curve_sections;
+        let angle = 360/numPoints; 
+        let angleCons = angle;
 
-        for(let x=0; x<8; x++){ 
-            nextPoint.x=center.x+(radius*Math.cos(i*(0.0174533))); 
-            nextPoint.y=center.y+(radius*Math.sin(i*(0.0174533)));
+        let first = {x:center.x+radius, y:center.y}; 
 
-            this.drawLine(firstPoint, nextPoint, color, ctx); 
+        let nextX = center.x+radius*(Math.cos(0.0174533*angle));
+        let nextY = center.y+radius*(Math.sin(0.0174533*angle));
+        let next = {x:nextX,y:nextY}; 
 
-            firstPoint=nextPoint;
-            i=i+45;
-        }
+        for(let i=0; i<numPoints; i++){ 
+            this.drawLine(first,next,color,ctx); 
+            first=next;
+            
+            angle=angle+angleCons;
+
+            nextX = center.x+radius*(Math.cos(0.0174533*angle));
+            nextY = center.y+radius*(Math.sin(0.0174533*angle));
+            next = {x:nextX,y:nextY};
+        } 
     }
 
     // pt0:          object ({x: __, y: __})
