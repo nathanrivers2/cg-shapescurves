@@ -94,7 +94,21 @@ class Renderer {
         this.drawLine({x:325,y:300},{x:425,y:300}, color,ctx);
 
         //e use curve
+        let pt0 = {x:435,y:170}
+        let pt1 = {x:435,y:260}
+        let pt2 = {x:550,y:260}
+        let pt3 = {x:550,y:170}
+        this.drawBezierCurveConstant(pt0,pt1,pt2,pt3,color,ctx);
+        
+        pt0 = {x:435,y:170}
+        pt1 = {x:435,y:100}
+        pt2 = {x:480,y:100}
+        pt3 = {x:525,y:100}
+        this.drawBezierCurveConstant(pt0,pt1,pt2,pt3,color,ctx); 
 
+        pt0 = {x:550,y:177}
+        pt1 = {x:480,y:177}
+        this.drawLine(pt0,pt1,color,ctx);
     }
 
     // left_bottom:  object ({x: __, y: __})
@@ -188,6 +202,30 @@ class Renderer {
         let nextPoint = {x:0,y:0}; 
        
         let increment=(1/this.num_curve_sections)
+        let nextX=0;
+        let nextY=0;
+       
+        for(let t=increment; t<=1; t=t+increment){ 
+            nextX=(Math.pow((1-t),3)*pt0.x)+(3*Math.pow((1-t),2)*t*pt1.x)+(3*(1-t)*Math.pow(t,2)*pt2.x)+(Math.pow(t, 3)*pt3.x);
+            nextY=(Math.pow((1-t),3)*pt0.y)+(3*Math.pow((1-t), 2)*t*pt1.y)+(3*(1-t)*Math.pow(t,2)*pt2.y)+(Math.pow(t, 3)*pt3.y);
+            nextPoint={x:nextX,y:nextY};
+            
+            this.drawLine(firstPoint,nextPoint,color,ctx); 
+            
+            firstPoint=nextPoint;
+        }
+    }
+
+    drawBezierCurveConstant(pt0, pt1, pt2, pt3, color, ctx) {
+        let t=0;
+
+        let initX = (Math.pow((1-t),3)*pt0.x)+(3*Math.pow((1-t),2)*t*pt1.x)+(3*(1-t)*Math.pow(t,2)*pt2.x)+(Math.pow(t, 3)*pt3.x);
+        let initY = (Math.pow((1-t),3)*pt0.y)+(3*Math.pow((1-t), 2)*t*pt1.y)+(3*(1-t)*Math.pow(t,2)*pt2.y)+(Math.pow(t, 3)*pt3.y);
+        
+        let firstPoint = {x:initX, y:initY};
+        let nextPoint = {x:0,y:0}; 
+       
+        let increment=1/36;
         let nextX=0;
         let nextY=0;
        
