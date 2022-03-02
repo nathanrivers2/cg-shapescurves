@@ -53,8 +53,6 @@ class Renderer {
 
     // ctx:          canvas context
     drawSlide1(ctx) {
-
-        //lets make an octagon first 
         let center = {x:300, y:300}; 
         let radius = 200; 
         let color = [250, 0, 0, 250];
@@ -63,7 +61,13 @@ class Renderer {
 
     // ctx:          canvas context
     drawSlide2(ctx) {
-
+        //bezier curve
+        let pt0 = {x:200,y:200};
+        let pt1 = {x:200,y:500}
+        let pt2 = {x:600,y:500}
+        let pt3 = {x:600,y:200}
+        let color = [250, 0, 0, 250];
+        this.drawBezierCurve(pt0,pt1,pt2,pt3,color,ctx);
     }
 
     // ctx:          canvas context
@@ -175,7 +179,27 @@ class Renderer {
     // color:        array of int [R, G, B, A]
     // ctx:          canvas context
     drawBezierCurve(pt0, pt1, pt2, pt3, color, ctx) {
+        let t=0;
+
+        let initX = (Math.pow((1-t),3)*pt0.x)+(3*Math.pow((1-t),2)*t*pt1.x)+(3*(1-t)*Math.pow(t,2)*pt2.x)+(Math.pow(t, 3)*pt3.x);
+        let initY = (Math.pow((1-t),3)*pt0.y)+(3*Math.pow((1-t), 2)*t*pt1.y)+(3*(1-t)*Math.pow(t,2)*pt2.y)+(Math.pow(t, 3)*pt3.y);
         
+        let firstPoint = {x:initX, y:initY};
+        let nextPoint = {x:0,y:0}; 
+       
+        let increment=(1/this.num_curve_sections)
+        let nextX=0;
+        let nextY=0;
+       
+        for(let t=increment; t<=1; t=t+increment){ 
+            nextX=(Math.pow((1-t),3)*pt0.x)+(3*Math.pow((1-t),2)*t*pt1.x)+(3*(1-t)*Math.pow(t,2)*pt2.x)+(Math.pow(t, 3)*pt3.x);
+            nextY=(Math.pow((1-t),3)*pt0.y)+(3*Math.pow((1-t), 2)*t*pt1.y)+(3*(1-t)*Math.pow(t,2)*pt2.y)+(Math.pow(t, 3)*pt3.y);
+            nextPoint={x:nextX,y:nextY};
+            
+            this.drawLine(firstPoint,nextPoint,color,ctx); 
+            
+            firstPoint=nextPoint;
+        }
     }
 
     // pt0:          object ({x: __, y: __})
