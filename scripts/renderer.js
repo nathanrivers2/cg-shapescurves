@@ -136,12 +136,7 @@ class Renderer {
         this.drawLine(rightBottom,left_bottom, color, ctx); 
         this.drawLine(right_top, leftTop, color, ctx);
        
-        if(this.showPoints){ 
-            this.drawPoint(left_bot,ctx); 
-            this.drawPoint(leftTop,ctx);
-            this.drawPoint(right_top,ctx);
-            this.drawPoint(rightBottom,ctx);
-        }
+
     }
 
     // center:       object ({x: __, y: __})
