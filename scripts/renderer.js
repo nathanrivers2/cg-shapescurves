@@ -74,26 +74,28 @@ class Renderer {
     drawSlide3(ctx) {
         //name slide; 
         let color = [250, 0, 0, 250];
+
         //N
         this.drawLine({x:50,y:100},{x:50,y:500},color,ctx);
         this.drawLine({x:50,y:500},{x:125,y:100},color,ctx);
         this.drawLine({x:125,y:100},{x:125,y:500},color,ctx);
+
         //a use circle 
+        //gave the girce a constant number of points so the tail was garaunteed to touch without changing where the tail was
         let center = {x:240, y:175}; 
         let radius = 75;
         this.drawCircleConstantPoints(center,radius,color,ctx,36);
-
         let edgeX = center.x+radius*(Math.cos(0.0174533*20));
         let edgeY = center.y+radius*(Math.sin(0.0174533*20));
         let edgePoint = {x:edgeX,y:edgeY};
-
         this.drawLine(edgePoint,{x:340,y:110},color,ctx);
-        //t
 
+        //t
         this.drawLine({x:375,y:100},{x:375,y:400}, color,ctx); 
-        this.drawLine({x:325,y:300},{x:425,y:300}, color,ctx);
+        this.drawLine({x:300,y:300},{x:450,y:300}, color,ctx);
 
         //e use curve
+        //I made the curve constant here just so it always looks like an e
         let pt0 = {x:435,y:170}
         let pt1 = {x:435,y:260}
         let pt2 = {x:550,y:260}
@@ -111,6 +113,13 @@ class Renderer {
         this.drawLine(pt0,pt1,color,ctx);
     }
 
+    //used to show the points
+    drawPoint(pt0,ctx){ 
+        let color = [250, 0, 250, 250];
+        let radius = 3; 
+        this.drawCircle(pt0, radius, color, ctx);
+    }
+
     // left_bottom:  object ({x: __, y: __})
     // right_top:    object ({x: __, y: __})
     // color:        array of int [R, G, B, A]
@@ -125,6 +134,13 @@ class Renderer {
         this.drawLine(rightBottom, right_top, color, ctx);
         this.drawLine(rightBottom,left_bottom, color, ctx); 
         this.drawLine(right_top, leftTop, color, ctx);
+       
+        if(this.showPoints){ 
+            this.drawPoint(left_bot,ctx); 
+            this.drawPoint(leftTop,ctx);
+            this.drawPoint(right_top,ctx);
+            this.drawPoint(rightBottom,ctx);
+        }
     }
 
     // center:       object ({x: __, y: __})
